@@ -232,285 +232,269 @@ export default function AdminPage() {
   }
 
   if (status === "logged_out") {
-    return (
-      <main className="min-h-screen w-full bg-background">
-        <div className="flex min-h-screen w-full">
+  return (
+    <main className="min-h-screen w-full bg-background">
+      <div className="flex min-h-screen w-full">
 
-          {/* =========================================================
-              LEFT - BRANDING / INFORMATION
-              Desktop & Tablet
-          ========================================================== */}
-          <section className="relative hidden overflow-hidden bg-primary lg:flex lg:w-1/2">
-            {/* Decorative shapes */}
-            <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-white/10" />
-            <div className="absolute -bottom-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-white/10" />
-            <div className="absolute right-20 top-1/3 h-24 w-24 rounded-full bg-white/5" />
+        {/* LEFT */}
+        <section className="relative hidden w-1/2 overflow-hidden bg-primary lg:flex">
+          <div className="relative z-10 flex w-full flex-col justify-between p-10 xl:p-16">
 
-            <div className="relative z-10 flex w-full flex-col justify-between p-10 xl:p-16">
-
-              {/* Brand */}
-              <div className="flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm">
-                  <span className="material-symbols-outlined text-[24px] text-on-primary">
-                    document_scanner
-                  </span>
-                </div>
-
-                <div className="flex flex-col">
-                  <span className="font-headline-md text-headline-md text-on-primary">
-                    Lumina Scan
-                  </span>
-                  <span className="font-body-sm text-body-sm text-on-primary/70">
-                    Smart Product Scanner
-                  </span>
-                </div>
+            {/* Brand */}
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15">
+                <span className="material-symbols-outlined text-[24px] text-on-primary">
+                  document_scanner
+                </span>
               </div>
 
-              {/* Main content */}
-              <div className="max-w-xl">
-                <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15 backdrop-blur-sm">
-                  <span className="material-symbols-outlined text-[34px] text-on-primary">
-                    admin_panel_settings
-                  </span>
-                </div>
-
-                <h1 className="font-headline-xl text-headline-xl leading-tight text-on-primary xl:text-[42px]">
-                  Kelola produk dengan lebih mudah.
-                </h1>
-
-                <p className="mt-5 max-w-lg font-body-lg text-body-lg leading-relaxed text-on-primary/75">
-                  Masuk ke panel admin Lumina Scan untuk mengelola data produk,
-                  stok, harga, kategori, dan informasi lainnya.
-                </p>
-
-                {/* Feature list */}
-                <div className="mt-8 flex flex-col gap-4">
-                  {[
-                    {
-                      icon: "inventory_2",
-                      text: "Kelola data produk",
-                    },
-                    {
-                      icon: "photo_camera",
-                      text: "Tambahkan foto produk",
-                    },
-                    {
-                      icon: "monitoring",
-                      text: "Pantau informasi stok",
-                    },
-                  ].map((item) => (
-                    <div
-                      key={item.text}
-                      className="flex items-center gap-3 text-on-primary/80"
-                    >
-                      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10">
-                        <span className="material-symbols-outlined text-[18px]">
-                          {item.icon}
-                        </span>
-                      </div>
-
-                      <span className="font-body-md text-body-md">
-                        {item.text}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Footer */}
-              <p className="font-body-sm text-body-sm text-on-primary/50">
-                Lumina Scan · Admin Panel
-              </p>
-            </div>
-          </section>
-
-          {/* =========================================================
-              RIGHT - LOGIN
-          ========================================================== */}
-          <section className="flex min-h-screen w-full items-center justify-center px-4 py-8 sm:px-6 lg:w-1/2 lg:px-10 xl:px-16">
-
-            <div className="w-full max-w-md">
-
-              {/* Mobile brand */}
-              <div className="mb-8 flex flex-col items-center text-center lg:hidden">
-                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary shadow-lg shadow-primary/25">
-                  <span className="material-symbols-outlined text-[28px] text-on-primary">
-                    document_scanner
-                  </span>
-                </div>
-
-                <span className="font-headline-lg text-headline-lg text-on-surface">
+              <div>
+                <div className="font-headline-md text-headline-md text-on-primary">
                   Lumina Scan
-                </span>
+                </div>
 
-                <span className="mt-1 font-body-sm text-body-sm text-on-surface-variant">
+                <div className="font-body-sm text-body-sm text-on-primary/70">
                   Smart Product Scanner
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="w-full max-w-[560px]">
+              <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/15">
+                <span className="material-symbols-outlined text-[34px] text-on-primary">
+                  admin_panel_settings
                 </span>
               </div>
 
-              {/* Back button */}
-              <Link
-                href="/scan"
-                className="mb-5 inline-flex items-center gap-2 rounded-full px-2 py-1.5 text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
-              >
-                <span className="material-symbols-outlined text-[18px]">
-                  arrow_back
-                </span>
+              <h1 className="text-5xl font-semibold leading-[1.08] tracking-tight text-on-primary xl:text-6xl">
+                Kelola produk dengan lebih mudah.
+              </h1>
 
-                <span className="font-body-sm text-body-sm">
-                  Kembali ke Scan
-                </span>
-              </Link>
+              <p className="mt-6 w-full max-w-[520px] text-lg leading-relaxed text-on-primary/75">
+                Masuk ke panel admin Lumina Scan untuk mengelola data produk,
+                stok, harga, kategori, dan informasi lainnya.
+              </p>
 
-              {/* Login card */}
-              <form
-                onSubmit={handleLogin}
-                className="rounded-3xl bg-surface-container-lowest p-5 shadow-[0_12px_50px_rgba(0,0,0,0.08)] sm:p-7 lg:p-8"
-              >
-                {/* Header */}
-                <div className="mb-7">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
-                    <span className="material-symbols-outlined text-[24px] text-primary">
-                      lock
+              <div className="mt-8 flex flex-col gap-4">
+                <div className="flex items-center gap-3 text-on-primary/80">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
+                    <span className="material-symbols-outlined text-[18px]">
+                      inventory_2
                     </span>
                   </div>
-
-                  <h2 className="font-headline-lg text-headline-lg text-on-surface">
-                    Admin Login
-                  </h2>
-
-                  <p className="mt-1.5 font-body-sm text-body-sm leading-relaxed text-on-surface-variant">
-                    Masuk untuk mengelola produk di Lumina Scan.
-                  </p>
+                  <span>Kelola data produk</span>
                 </div>
 
-                {/* Password */}
-                <div>
-                  <label
-                    htmlFor="admin-password"
-                    className="mb-2 block font-label-caps text-label-caps text-on-surface-variant"
-                  >
-                    Password
-                  </label>
-
-                  <div className="relative">
-                    <input
-                      id="admin-password"
-                      type={showPassword ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                        setLoginError("");
-                      }}
-                      placeholder="Masukkan password"
-                      autoFocus
-                      autoComplete="current-password"
-                      disabled={loggingIn}
-                      className={`w-full rounded-xl border bg-surface px-4 py-3.5 pr-12 font-body-lg text-body-lg text-on-surface placeholder:text-on-surface-variant/50 transition-colors focus:outline-none disabled:cursor-not-allowed disabled:opacity-60 ${
-                        loginError
-                          ? "border-error focus:border-error"
-                          : "border-outline-variant focus:border-primary"
-                      }`}
-                    />
-
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword((v) => !v)}
-                      disabled={loggingIn}
-                      aria-label={
-                        showPassword
-                          ? "Sembunyikan password"
-                          : "Tampilkan password"
-                      }
-                      className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-on-surface-variant transition-colors hover:bg-surface-container active:bg-surface-container-high"
-                    >
-                      <span className="material-symbols-outlined text-[20px]">
-                        {showPassword ? "visibility_off" : "visibility"}
-                      </span>
-                    </button>
+                <div className="flex items-center gap-3 text-on-primary/80">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
+                    <span className="material-symbols-outlined text-[18px]">
+                      photo_camera
+                    </span>
                   </div>
+                  <span>Tambahkan foto produk</span>
                 </div>
 
-                {/* Error / Hint */}
-                <div
-                  className="mt-3 min-h-6"
-                  aria-live="polite"
-                >
-                  {loginError ? (
-                    <span className="flex items-center gap-2 font-body-sm text-body-sm text-error">
-                      <span className="material-symbols-outlined text-[16px]">
-                        error
-                      </span>
-
-                      <span>{loginError}</span>
+                <div className="flex items-center gap-3 text-on-primary/80">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10">
+                    <span className="material-symbols-outlined text-[18px]">
+                      monitoring
                     </span>
-                  ) : (
-                    <span className="font-body-sm text-body-sm text-on-surface-variant">
-                      Masukkan password admin untuk melanjutkan.
-                    </span>
-                  )}
+                  </div>
+                  <span>Pantau informasi stok</span>
                 </div>
+              </div>
+            </div>
 
-                {/* Login button */}
-                <button
-                  type="submit"
-                  disabled={loggingIn || !password}
-                  className="mt-5 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 font-label-caps text-label-caps text-on-primary transition-all hover:brightness-95 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {loggingIn && (
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-on-primary/40 border-t-on-primary" />
-                  )}
+            <p className="text-sm text-on-primary/50">
+              Lumina Scan · Admin Panel
+            </p>
+          </div>
 
-                  <span>
-                    {loggingIn ? "Memeriksa..." : "Masuk"}
+          {/* Decorative circles */}
+          <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-white/10" />
+          <div className="absolute -bottom-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-white/10" />
+          <div className="absolute right-20 top-1/2 h-28 w-28 rounded-full bg-white/5" />
+        </section>
+
+        {/* RIGHT */}
+        <section className="flex min-h-screen w-full items-center justify-center px-5 py-8 sm:px-8 lg:w-1/2 lg:px-12 xl:px-20">
+
+          <div className="w-full lg:w-[420px] xl:w-[460px]">
+
+            {/* Mobile brand */}
+            <div className="mb-8 flex flex-col items-center text-center lg:hidden">
+              <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary">
+                <span className="material-symbols-outlined text-[28px] text-on-primary">
+                  document_scanner
+                </span>
+              </div>
+
+              <div className="text-xl font-semibold text-on-surface">
+                Lumina Scan
+              </div>
+
+              <div className="mt-1 text-sm text-on-surface-variant">
+                Smart Product Scanner
+              </div>
+            </div>
+
+            {/* Back */}
+            <Link
+              href="/scan"
+              className="mb-6 inline-flex items-center gap-2 rounded-full px-2 py-1.5 text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
+            >
+              <span className="material-symbols-outlined text-[20px]">
+                arrow_back
+              </span>
+
+              <span className="whitespace-nowrap text-sm">
+                Kembali ke Scan
+              </span>
+            </Link>
+
+            {/* Login Card */}
+            <form
+              onSubmit={handleLogin}
+              className="w-full rounded-3xl bg-surface-container-lowest p-6 shadow-[0_12px_50px_rgba(0,0,0,0.08)] sm:p-8"
+            >
+              <div className="mb-7">
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+                  <span className="material-symbols-outlined text-[24px] text-primary">
+                    lock
                   </span>
-                </button>
+                </div>
 
-                {/* Demo password */}
-                <div className="mt-4 rounded-2xl bg-primary/5 p-3.5 sm:p-4">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex min-w-0 items-center gap-2.5">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                        <span className="material-symbols-outlined text-[17px] text-primary">
-                          info
-                        </span>
-                      </div>
+                <h2 className="text-2xl font-semibold text-on-surface">
+                  Admin Login
+                </h2>
 
-                      <div className="min-w-0">
-                        <p className="font-label-caps text-label-caps text-on-surface">
-                          Password Demo
-                        </p>
+                <p className="mt-2 text-sm leading-relaxed text-on-surface-variant">
+                  Masuk untuk mengelola produk di Lumina Scan.
+                </p>
+              </div>
 
-                        <p className="font-body-sm text-body-sm text-on-surface-variant">
-                          Untuk pengujian aplikasi
-                        </p>
-                      </div>
+              {/* Password */}
+              <div>
+                <label
+                  htmlFor="admin-password"
+                  className="mb-2 block text-xs font-semibold uppercase tracking-wide text-on-surface-variant"
+                >
+                  Password
+                </label>
+
+                <div className="relative">
+                  <input
+                    id="admin-password"
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setLoginError("");
+                    }}
+                    placeholder="Masukkan password"
+                    autoFocus
+                    autoComplete="current-password"
+                    disabled={loggingIn}
+                    className={`w-full rounded-xl border bg-surface px-4 py-3.5 pr-12 text-base text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none ${
+                      loginError
+                        ? "border-error focus:border-error"
+                        : "border-outline-variant focus:border-primary"
+                    }`}
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((v) => !v)}
+                    disabled={loggingIn}
+                    aria-label={
+                      showPassword
+                        ? "Sembunyikan password"
+                        : "Tampilkan password"
+                    }
+                    className="absolute right-2 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-on-surface-variant hover:bg-surface-container"
+                  >
+                    <span className="material-symbols-outlined text-[20px]">
+                      {showPassword ? "visibility_off" : "visibility"}
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Error */}
+              <div className="mt-3 min-h-6">
+                {loginError ? (
+                  <span className="flex items-center gap-2 text-sm text-error">
+                    <span className="material-symbols-outlined text-[16px]">
+                      error
+                    </span>
+                    {loginError}
+                  </span>
+                ) : (
+                  <span className="text-sm text-on-surface-variant">
+                    Masukkan password admin untuk melanjutkan.
+                  </span>
+                )}
+              </div>
+
+              {/* Button */}
+              <button
+                type="submit"
+                disabled={loggingIn || !password}
+                className="mt-5 flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-primary px-5 py-3 font-semibold text-on-primary transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {loggingIn && (
+                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-on-primary/40 border-t-on-primary" />
+                )}
+
+                {loggingIn ? "Memeriksa..." : "Masuk"}
+              </button>
+
+              {/* Demo */}
+              <div className="mt-4 rounded-2xl bg-primary/5 p-4">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                      <span className="material-symbols-outlined text-[18px] text-primary">
+                        info
+                      </span>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setPassword("admin123");
-                        setLoginError("");
-                      }}
-                      className="w-full shrink-0 rounded-full bg-primary px-4 py-2.5 font-label-caps text-label-caps text-on-primary transition-opacity hover:opacity-90 sm:w-auto"
-                    >
-                      Isi otomatis
-                    </button>
-                  </div>
-                </div>
-              </form>
+                    <div>
+                      <p className="text-sm font-semibold text-on-surface">
+                        Password Demo
+                      </p>
 
-              {/* Footer */}
-              <p className="mt-6 text-center font-body-sm text-body-sm text-on-surface-variant">
-                Lumina Scan · Panel Admin
-              </p>
-            </div>
-          </section>
-        </div>
-      </main>
-    );
-  }
+                      <p className="text-xs text-on-surface-variant">
+                        Untuk pengujian aplikasi
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPassword("admin123");
+                      setLoginError("");
+                    }}
+                    className="w-full rounded-full bg-primary px-4 py-2.5 text-xs font-semibold text-on-primary sm:w-auto"
+                  >
+                    Isi otomatis
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <p className="mt-6 text-center text-sm text-on-surface-variant">
+              Lumina Scan · Panel Admin
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
 
   return (
     <main className="min-h-screen w-full bg-background px-margin-mobile pb-16 pt-6">
