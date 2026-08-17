@@ -7,7 +7,7 @@ import {
 } from "@/lib/db";
 import { compareSignatures, processImage } from "@/lib/image";
 
-const MATCH_THRESHOLD = 0.55;
+const MATCH_THRESHOLD = 0.6;
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => null);
