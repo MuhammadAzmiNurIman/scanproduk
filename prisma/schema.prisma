@@ -1,0 +1,25 @@
+generator client {
+  provider      = "prisma-client-js"
+  engineType    = "binary"
+  binaryTargets = ["native", "windows", "rhel-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id        String  @id
+  barcode   String? @unique
+  name      String
+  price     Float
+  aisle     Int     @default(1)
+  stock     String  @default("in_stock")
+  category  String  @default("General")
+  image     String?
+  signature String?
+  createdAt BigInt @map("created_at")
+
+  @@map("products")
+}
