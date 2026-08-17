@@ -73,7 +73,11 @@ export default function ScanPage() {
     async function start() {
       try {
         stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" },
+          video: {
+            facingMode: "environment",
+            width: { ideal: 1920 },
+            height: { ideal: 1080 },
+          },
         });
         if (cancelled || !videoRef.current) {
           stream.getTracks().forEach((t) => t.stop());
@@ -432,7 +436,15 @@ export default function ScanPage() {
             playsInline
             className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 bg-on-background/30 backdrop-blur-[2px]" />
+          <div
+            className="absolute inset-0 bg-on-background/30"
+            style={{
+              backdropFilter: "blur(2px)",
+              WebkitBackdropFilter: "blur(2px)",
+              maskImage: "radial-gradient(circle at center, transparent 38%, black 58%)",
+              WebkitMaskImage: "radial-gradient(circle at center, transparent 38%, black 58%)",
+            }}
+          />
 
           <div className="absolute inset-0 flex items-center justify-center p-margin-mobile">
             <div className="relative aspect-square w-3/4 max-w-[280px]" id="scanner-frame">
