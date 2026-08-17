@@ -51,25 +51,27 @@ function channelHashPixels(data: Buffer, channel: number): string {
   return hash.toString(16).padStart(16, "0");
 }
 
-// Fine color histogram (4096 bins) computed after stretching brightness to the
-// full range. Stretching makes the histogram tolerant to lighting differences
-// between photos, while the fine bins still separate products with different
-// color palettes (a coarse histogram merges all "white-ish" colors and causes
-// false positives between unrelated products photographed on the same shelf).
+// Fine color histogram (4096 bins) computed after a robust brightness stretch.
+// The stretch uses the 2nd..98th percentile of luminance instead of the raw
+// min/max, so dark photos with a few outlier pixels are not stretched
+// erratically and the histogram stays stable under lighting changes. The fine
+// bins still separate products with different color palettes, which a coarse
+// histogram cannot do.
 function histogramPixels(data: Buffer, pixelCount: number): number[] {
-  let min = 255;
-  let max = 0;
   const lums = new Array<number>(pixelCount);
   for (let i = 0; i < pixelCount; i++) {
-    const lum = 0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2];
-    lums[i] = lum;
-    if (lum < min) min = lum;
-    if (lum > max) max = lum;
+    lums[i] =
+      0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2];
   }
-  const span = Math.max(1, max - min);
+  const sorted = lums.slice().sort((a, b) => a - b);
+  const lo = sorted[Math.floor(pixelCount * 0.02)];
+  const hi = sorted[Math.min(pixelCount - 1, Math.ceil(pixelCount * 0.98))];
+  const min = Math.max(0, lo);
+  const max = Math.min(255, hi);
+  const span = Math.max(20, max - min);
+  const k = 255 / span;
   const bins = new Array<number>(HIST_BINS).fill(0);
   for (let i = 0; i < pixelCount; i++) {
-    const k = 255 / span;
     const r = Math.max(0, Math.min(255, Math.round((data[i * 4] - min) * k)));
     const g = Math.max(0, Math.min(255, Math.round((data[i * 4 + 1] - min) * k)));
     const b = Math.max(0, Math.min(255, Math.round((data[i * 4 + 2] - min) * k)));
@@ -218,7 +220,7 @@ export function compareSignatures(a: string, b: string): number {
     cSim = 1 - colorDist / clen;
   }
 
-  let score = 0.55 * structSim + 0.3 * hSim + 0.15 * cSim;
+  let score = 0.85 * structSim + 0.1 * hSim + 0.05 * cSim;
 
   // Safety gate: if both images use fine histograms, derive a coarse
   // histogram and reject comparisons with essentially no overlapping color
