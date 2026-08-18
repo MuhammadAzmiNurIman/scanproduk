@@ -26,7 +26,10 @@ function getOcrWorker(): Promise<Worker> {
   if (!ocrWorkerPromise) {
     ocrWorkerPromise = createWorker("eng", undefined, { logger: () => {} }).then(
       async (worker) => {
-        await worker.setParameters({ tessedit_pageseg_mode: PSM.SPARSE_TEXT });
+        await worker.setParameters({
+          tessedit_pageseg_mode: PSM.SPARSE_TEXT,
+          tessedit_char_whitelist: "0123456789",
+        });
         return worker;
       },
     );
@@ -178,7 +181,7 @@ export default function ScanPage() {
     };
   }, [lookupProduct]);
 
-  // OCR: baca teks pada label produk via kamera
+  // OCR: baca angka barcode via kamera
   const runOcr = useCallback(async () => {
     if (stateRef.current !== "idle") return;
     const video = videoRef.current;
@@ -195,12 +198,12 @@ export default function ScanPage() {
 
       const worker = await getOcrWorker();
       const { data } = await worker.recognize(canvas);
-      const text = (data.text ?? "")
-        .replace(/[^\p{L}\p{N}\s]/gu, " ")
-        .replace(/\s+/g, " ")
-        .trim();
+      const digits = (data.text ?? "").match(/\d{6,}/g);
+      const code = digits
+        ? digits.sort((a, b) => b.length - a.length)[0]
+        : "";
 
-      if (!text) {
+      if (!code) {
         setOcrText("");
         setState("error");
         return;
@@ -209,19 +212,14 @@ export default function ScanPage() {
       const res = await fetch("/api/scan", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: text }),
+        body: JSON.stringify({ barcode: code }),
       });
 
       if (res.ok) {
-        const data2 = (await res.json()) as { results: Product[] };
-        if (data2.results.length > 0) {
-          presentProduct(data2.results[0]);
-        } else {
-          setOcrText(text);
-          setState("error");
-        }
+        const data2 = (await res.json()) as { product: Product };
+        presentProduct(data2.product);
       } else {
-        setOcrText("");
+        setOcrText(code);
         setState("error");
       }
     } catch {
@@ -542,11 +540,11 @@ export default function ScanPage() {
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-full bg-surface-container-lowest/20 shadow-lg backdrop-blur-md transition-transform active:scale-95">
                 <span className="material-symbols-outlined text-on-tertiary text-[24px]">
-                  document_scanner
+                  barcode
                 </span>
               </div>
               <span className="font-label-caps text-label-caps text-on-tertiary drop-shadow-md">
-                OCR
+                Barcode
               </span>
             </button>
           </div>
@@ -578,7 +576,7 @@ export default function ScanPage() {
                       Siap scan
                     </span>
                     <span className="font-body-sm text-body-sm text-on-surface-variant">
-                      Arahkan barcode atau label produk
+                      Arahkan barcode produk
                     </span>
                   </div>
                 </div>
@@ -664,8 +662,8 @@ export default function ScanPage() {
                 </span>
                 <span className="font-body-sm text-on-surface-variant mb-2">
                   {ocrText
-                    ? `Kamera membaca: "${ocrText.slice(0, 120)}"`
-                    : "Barcode atau teks tidak dikenali."}
+                    ? `Barcode terbaca: "${ocrText.slice(0, 120)}"`
+                    : "Barcode tidak dikenali."}
                 </span>
                 <div className="flex gap-sm">
                   <button
